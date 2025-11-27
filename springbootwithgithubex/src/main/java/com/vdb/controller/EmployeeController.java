@@ -6,6 +6,7 @@ import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Comparator;
@@ -42,4 +43,13 @@ public class EmployeeController {
       {
           return ResponseEntity.ok(employeeList.stream().sorted(Comparator.comparing(Employee::getEmpName)).toList());
       }
+
+      // find by name
+      @GetMapping("/findbyname/{empName}")
+      public ResponseEntity<List<Employee>> findByName(@RequestParam(defaultValue = "vivek")String empName)
+      {
+          return ResponseEntity.ok(employeeList.stream().filter(employee -> employee.getEmpName().equals(empName)).toList());
+      }
+
+
 }
